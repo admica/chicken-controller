@@ -4,10 +4,10 @@ Automatically open and close a chicken coop door at sunrise and sunset using a R
  * Git tree:  https://github.com/admica/chicken-controller.git
     * Clone with `git clone https://github.com/admica/chicken-controller.git`
 
- # The only customizations you should need is to update operator.py with your own longitude/latitude and pin numbers for your gpio.
- # Drop all files together anywhere you want, then update rc.local to reflect your path.
- # Test motor up/down scripts to ensure your wiring is correct.
- # Make sure rc.local loads at startup.
+ ### The only customizations you should need is to update operator.py with your own longitude/latitude and pin numbers for your gpio.
+ ### Drop all files together anywhere you want, then update rc.local to reflect your path.
+ ### Test motor up/down scripts to ensure your wiring is correct.
+ ### Make sure rc.local loads at startup.
 
 #### Requirements
 * python2
