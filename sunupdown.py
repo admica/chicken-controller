@@ -6,7 +6,11 @@ import datetime
 
 class Sunupdown(object):
 
-    def __init__(self):
+    def __init__(self, lat=38.8895461, lng=-77.0361769):
+        self.lat = lat
+        self.lng = lng
+        self.url = "https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=today&formatted=0" % (self.lat, self.long)
+
         self.until_rise = 1
         self.until_set = 1
 
@@ -15,10 +19,9 @@ class Sunupdown(object):
         self.offset = (utcnow-now).seconds
 
 
-    def fetch(self, lat=38.8895461, lng=-77.0361769):
+    def fetch(self):
         """calculate time until next sunrise and sunset"""
-        url = "https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=today&formatted=0" % (lat, long)
-        data = requests.get(url)
+        data = requests.get(self.url)
 
         sunrise = data['results']['sunrise'] # string date
         sunset = data['results']['sunset'] # string date
@@ -45,8 +48,8 @@ class Sunupdown(object):
 
 if __name__ == '__main__':
 
-    sun = Sunupdown()
-    up, down = sun.fetch(lat=8.8895461, lng=-77.0361769)
+    sun = Sunupdown(lat=8.8895461, lng=-77.0361769)
+    up, down = sun.fetch()
 
     print "Timezone offset from UTC:", sun.offset
     print "Up/Down in seconds:", up, down
