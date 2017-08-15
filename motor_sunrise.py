@@ -24,19 +24,19 @@ GPIO.setup(PINA, GPIO.OUT)
 GPIO.setup(PINB, GPIO.OUT)
 GPIO.setup(PINC, GPIO.OUT)
 GPIO.setup(PIND, GPIO.OUT)
-GPIO.output(PINA, False)
-GPIO.output(PINB, False)
-GPIO.output(PINC, False)
-GPIO.output(PIND, False)
+GPIO.output(PINA, True)
+GPIO.output(PINB, True)
+GPIO.output(PINC, True)
+GPIO.output(PIND, True)
 sleep(.25)
 
 # Turn on motor
-GPIO.output(PINB, True)
-GPIO.output(PINA, True)
+GPIO.output(PINB, False)
+GPIO.output(PINA, False)
 
 sleep(RUNTIME)
 
 # Turn off motor
-GPIO.output(PINA, False)
-GPIO.output(PINB, False)
+GPIO.output(PINA, True)
+GPIO.output(PINB, True)
 
