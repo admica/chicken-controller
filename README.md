@@ -4,7 +4,7 @@ Automatically open and close a chicken coop door at sunrise and sunset using a R
  * Git tree:  https://github.com/admica/chicken-controller.git
     * Clone with `git clone https://github.com/admica/chicken-controller.git`
 
- ### The only customizations you should need is to update operator.py with your own longitude/latitude and pin numbers for your gpio.
+ ### The only customizations you should need is to update config.txt with your own longitude/latitude/runtimes and pin numbers for your gpio in operator.py.
  ### Drop all files together anywhere you want, then update rc.local to reflect your path.
  ### Test motor up/down scripts to ensure your wiring is correct.
  ### Make sure rc.local loads at startup.
@@ -15,6 +15,7 @@ Automatically open and close a chicken coop door at sunrise and sunset using a R
 * RPi.GPIO (https://pypi.python.org/pypi/RPi.GPIO)
 
 #### Files
+- config.txt -- longitude, latitude, and motor runtimes are specified here.
 - operator.py -- Main app. Everything else is used internally by this program.
 - sunupdown.py -- class Sunupdown fetches sunrise and sunset times from the internet for a given lat/long.
 - motor_sunrise.py -- Turns on relay #1 and #2 to open the door
