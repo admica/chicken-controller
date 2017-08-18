@@ -1,2 +1,4 @@
 latitude: 8.8895461
 longitude: -77.0361769
+motor_up_seconds: 7
+motor_down_seconds: 8

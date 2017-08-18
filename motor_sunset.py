@@ -1,6 +1,9 @@
 #!/usr/bin/python -OOtt
 
-RUNTIME = 3 # seconds
+import yaml
+config = yaml.load(open('config.txt','r'))
+RUNTIME = config['motor_down_seconds']
+
 PINA = 31
 PINB = 33
 PINC = 35
