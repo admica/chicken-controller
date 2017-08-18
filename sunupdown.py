@@ -9,7 +9,7 @@ class Sunupdown(object):
     def __init__(self, lat=38.8895461, lng=-77.0361769):
         self.lat = lat
         self.lng = lng
-        self.url = "https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=today&formatted=0" % (self.lat, self.long)
+        self.url = "https://api.sunrise-sunset.org/json?lat=%s&lng=%s&date=today&formatted=0" % (self.lat, self.lng)
 
         self.online = False # last lookup was successful
         self.last_rise = None # first lookup will set this
@@ -27,7 +27,7 @@ class Sunupdown(object):
         """calculate time until next sunrise and sunset"""
         try:
             data = requests.get(self.url)
-            data = data.response()
+            data = data.json()
 
             sunrise = data['results']['sunrise'] # string date
             sunset = data['results']['sunset'] # string date
@@ -40,7 +40,8 @@ class Sunupdown(object):
             sunset = sunset - datetime.timedelta(seconds=self.offset)
             self.online = True
 
-        except:
+        except Exception as e:
+            print e
             sunrise = self.last_rise + datetime.timedelta(seconds=86400) # add 24 hours
             sunset = self.last_set + datetime.timedelta(seconds=86400)
 

@@ -36,29 +36,45 @@ def outp(msg):
 while True:
 
     try:
-        # start with door down to initialize the state
+        outp("Starting up with door closed as initial state")
         sun = Sunupdown(lat,lng)
         up,down = sun.fetch()
         door_down()
 
         if up > down:
-            # door should be up right now
+            outp("Door should be up right now, opening...")
             door_up()
         else:
-            # door should stay down
+            outp("Door should stay shut right now.")
             pass
 
         while True:
             up,down = sun.fetch()
             outp("Sleeping %s seconds until sunrise." % up)
-            sleep(up)
+
+            mins = up/60
+            for i in range(0,mins):
+                left = mins-i
+                if sun.online:
+                    outp("%d minutes until sunrise (online)" % left)
+                else:
+                    outp("%d minutes until sunrise (offline)" % left)
+                sleep(60)
 
             outp("Opening Door.")
             door_up()
 
             up,down = sun.fetch()
             outp("Sleeping %s seconds until sunset." % down)
-            sleep(down)
+
+            mins = down/60
+            for i in range(0,mins):
+                left = mins-i
+                if sun.online:
+                    outp("%d minutes until sunset (online)" % left)
+                else:
+                    outp("%d minutes until sunset (offline)" % left)
+                sleep(60)
 
             outp("Closing Door.")
             door_down()
