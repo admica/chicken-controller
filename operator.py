@@ -1,8 +1,14 @@
 #!/usr/bin/python -OOtt
 
-# change these coordinates to match your location
-lat = 38.8894541
-lng = -77.0373655
+import yaml
+config = yaml.load(open('config.txt','r'))
+lat = config['latitude']
+lng = config['longitude']
+
+import zmq
+context = zmq.Context()
+socket = context.socket(zmq.REQ)
+socket.connect("tcp://127.0.0.1:1234")
 
 from sunupdown import Sunupdown
 from subprocess import Popen, PIPE
@@ -10,12 +16,19 @@ from time import sleep
 import datetime
 
 def door_up():
-    p = Popen(cmd=['python','motor_sunrise.py'], stdout=PIPE, stderr=PIPE)
+    p = Popen('python motor_sunrise.py', shell=True, stdout=PIPE, stderr=PIPE)
     p.communicate()
 
 def door_down():
-    p = Popen(cmd=['python','motor_sunset.py'], stdout=PIPE, stderr=PIPE)
+    p = Popen('python motor_sunset.py', shell=True, stdout=PIPE, stderr=PIPE)
     p.communicate()
+
+def outp(msg):
+    print msg
+    try:
+        socket.send(msg)
+    except:
+        pass
 
 ######################################
 
@@ -37,24 +50,25 @@ while True:
 
         while True:
             up,down = sun.fetch()
-            print "Sleeping %s seconds until sunrise." % up
+            outp("Sleeping %s seconds until sunrise." % up)
             sleep(up)
 
-            print "Opening Door."
+            outp("Opening Door.")
             door_up()
 
             up,down = sun.fetch()
-            print "Sleeping %s seconds until sunset." % down
+            outp("Sleeping %s seconds until sunset." % down)
             sleep(down)
 
-            print "Closing Door."
+            outp("Closing Door.")
             door_down()
 
     except Exception as e:
         # try complaining to syslog
         try:
             msg = '"Chicken Controller Operator Error: %s"' % e
-            Popen(cmd=['logger',msg], stdout=PIPE, stderr=PIPE)
+            cmd = 'logger %s' % msg
+            Popen(cmd, stdout=PIPE, stderr=PIPE)
         except:
             pass
 

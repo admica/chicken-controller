@@ -1,6 +1,6 @@
 #!/usr/bin/python -OOtt
 
-RUNTIME = 5 # seconds
+RUNTIME = 3 # seconds
 PINA = 31
 PINB = 33
 PINC = 35
@@ -20,6 +20,7 @@ from time import sleep
 
 # setup
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 GPIO.setup(PINA, GPIO.OUT)
 GPIO.setup(PINB, GPIO.OUT)
 GPIO.setup(PINC, GPIO.OUT)
